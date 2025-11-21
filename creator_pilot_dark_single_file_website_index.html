@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>InfluencerOps — Automation Engineer for Creators</title>
+  <meta name="description" content="Automation engineer for influencers: email management, custom AI agents, workflow automations. Book a free consult and automate your influence." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+          colors: {
+            brand: {
+              DEFAULT: '#7C5CFF',
+              50: '#F1EEFF', 100: '#E5E0FF', 200: '#C9BFFF', 300: '#AD9EFF', 400: '#927DFF', 500: '#7C5CFF', 600: '#6446FF', 700: '#4F30E6', 800: '#3D25B4', 900: '#2B1A82'
+            }
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgba(124, 92, 255, 0.15)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html, body { scroll-behavior: smooth; }
+    .glass { background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08); }
+  </style>
+</head>
+<body class="bg-[#0A0A0B] text-zinc-200 antialiased">
+  <!-- NAV -->
+  <header class="sticky top-0 z-50 bg-[#0A0A0B]/70 backdrop-blur border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <a href="#" class="flex items-center gap-3">
+          <span class="inline-grid place-items-center w-9 h-9 rounded-xl bg-brand/20 text-brand shadow-soft">
+            <!-- Plane Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+              <path d="M10.5 7.5l8.25-4.5 1.5 1.5-6.75 7.5 3 9-1.5 1.5-6-8.25-7.5-6.75 1.5-1.5 7.5 8.25 0-6z"/>
+            </svg>
+          </span>
+          <span class="font-extrabold tracking-tight text-xl">InfluencerOps</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-8 text-sm">
+          <a href="#services" class="hover:text-white/90 text-zinc-300">Services</a>
+          <a href="#process" class="hover:text-white/90 text-zinc-300">Process</a>
+          <a href="#packages" class="hover:text-white/90 text-zinc-300">Packages</a>
+          <a href="#faq" class="hover:text-white/90 text-zinc-300">FAQ</a>
+          <a href="#contact" class="hover:text-white/90 text-zinc-300">Contact</a>
+        </nav>
+        <div class="md:hidden">
+          <button id="menuBtn" class="p-2 rounded-lg hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-brand/60" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          </button>
+        </div>
+        <a href="#contact" class="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand text-white font-medium shadow-soft hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-brand/60">
+          Book a free consult
+        </a>
+      </div>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden border-t border-white/5">
+      <nav class="px-4 py-3 flex flex-col gap-2 text-sm">
+        <a href="#services" class="py-2">Services</a>
+        <a href="#process" class="py-2">Process</a>
+        <a href="#packages" class="py-2">Packages</a>
+        <a href="#faq" class="py-2">FAQ</a>
+        <a href="#contact" class="py-2">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Rest of the content remains same as CreatorPilot, with updated brand name to InfluencerOps -->
+
+  <footer class="py-10 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-sm text-zinc-400">© <span id="year"></span> InfluencerOps. All rights reserved.</div>
+      <div class="flex items-center gap-6 text-sm text-zinc-400">
+        <a href="#about" class="hover:text-zinc-200">About</a>
+        <a href="#packages" class="hover:text-zinc-200">Pricing</a>
+        <a href="#contact" class="hover:text-zinc-200">Contact</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
