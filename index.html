@@ -31,6 +31,7 @@
       <h1 class="text-xl font-extrabold text-white tracking-tight">InfluencerOps</h1>
       <nav class="hidden md:flex items-center gap-8 text-sm">
         <a href="#services" class="hover:text-white/90">Services</a>
+        <a href="#about" class="hover:text-white/90">About</a>
         <a href="#contact" class="hover:text-white/90">Contact</a>
       </nav>
     </div>
@@ -93,7 +94,7 @@
     </div>
   </section>
 
-  <!-- ABOUT SECTION / VALUE -->
+  <!-- WHY SECTION -->
   <section class="py-20 px-6">
     <div class="max-w-5xl mx-auto text-center">
       <h2 class="text-4xl font-extrabold text-white mb-4">Why InfluencerOps?</h2>
@@ -115,6 +116,39 @@
     </div>
   </section>
 
+  <!-- ABOUT ME (Inserted Section) -->
+  <section id="about" class="py-20 px-6 bg-white/5 border-y border-white/10">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl font-extrabold text-white mb-4">About Me</h2>
+      <p class="text-zinc-400 max-w-2xl mx-auto mb-10">
+        I'm Harry Collins — an operator, systems-builder, and AI workflow engineer dedicated to helping influencers and agencies run smoother, smarter businesses. With a background in operations, automation, and creator-economy strategy, I specialise in building the invisible infrastructure that keeps your business running flawlessly.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-8 mt-8">
+        <div class="glass p-6 rounded-2xl">
+          <h3 class="text-white font-semibold mb-2">AI & Automation Expertise</h3>
+          <p class="text-zinc-400 text-sm">
+            I design AI agents and automated workflows that replace repetitive manual work, giving creators more time to focus on what actually grows their brand.
+          </p>
+        </div>
+
+        <div class="glass p-6 rounded-2xl">
+          <h3 class="text-white font-semibold mb-2">Operations & Systems</h3>
+          <p class="text-zinc-400 text-sm">
+            From contract management to deliverable tracking, I build structured systems that prevent things from slipping through the cracks.
+          </p>
+        </div>
+
+        <div class="glass p-6 rounded-2xl">
+          <h3 class="text-white font-semibold mb-2">Creator-Economy Focused</h3>
+          <p class="text-zinc-400 text-sm">
+            Influencers and agencies have unique operational needs — I help you run like a high-performing business without the overhead of a full operations team.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="py-20 text-center bg-brand/10">
     <h2 class="text-3xl font-extrabold text-white mb-4">Ready to streamline your operations?</h2>
@@ -122,21 +156,20 @@
     <a href="#contact" class="px-6 py-3 bg-brand text-white rounded-xl font-semibold hover:opacity-90">Get Started</a>
   </section>
 
-<!-- CONTACT -->
-<section id="contact" class="py-20 px-6">
-  <div class="max-w-3xl mx-auto text-center">
-    <h2 class="text-4xl font-extrabold text-white mb-4">Let's Talk</h2>
-    <p class="text-zinc-400 mb-8">Tell us about your business, and we'll create your personalised operations roadmap.</p>
+  <!-- CONTACT -->
+  <section id="contact" class="py-20 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-4xl font-extrabold text-white mb-4">Let's Talk</h2>
+      <p class="text-zinc-400 mb-8">Tell us about your business, and we'll create your personalised operations roadmap.</p>
 
-    <form class="glass p-6 rounded-2xl space-y-4" action="https://formspree.io/f/xjkzbjkw" method="POST">
-      <input type="text" name="name" placeholder="Your Name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand/60" required>
-      <input type="email" name="email" placeholder="Your Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand/60" required>
-      <textarea name="message" rows="5" placeholder="What operational challenges are you currently facing?" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand/60" required></textarea>
-      <button type="submit" class="w-full bg-brand text-white py-3 rounded-xl font-semibold hover:opacity-90">Send Message</button>
-    </form>
-  </div>
-</section>
-
+      <form class="glass p-6 rounded-2xl space-y-4" action="https://formspree.io/f/xjkzbjkw" method="POST">
+        <input type="text" name="name" placeholder="Your Name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand/60" required>
+        <input type="email" name="email" placeholder="Your Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand/60" required>
+        <textarea name="message" rows="5" placeholder="What operational challenges are you currently facing?" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand/60" required></textarea>
+        <button type="submit" class="w-full bg-brand text-white py-3 rounded-xl font-semibold hover:opacity-90">Send Message</button>
+      </form>
+    </div>
+  </section>
 
   <footer class="text-center py-8 border-t border-white/10 text-zinc-400 text-sm">
     © <span id="year"></span> InfluencerOps. AI-Powered Operations for Influencers & Agencies.
