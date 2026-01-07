@@ -7,86 +7,207 @@
   <meta name="description" content="AI agent engineering, contract oversight, and financial management for influencers and agencies — your complete business operations partner." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
-          colors: { brand: { DEFAULT: '#7C5CFF' } }
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'], display: ['Oswald', 'Inter', 'ui-sans-serif', 'system-ui'] },
+          colors: {
+            brand: {
+              DEFAULT: '#FF0066',
+              orange: '#E60050'
+            }
+          }
         }
       }
     }
   </script>
   <style>
     html, body { scroll-behavior: smooth; }
-    .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1); }
+    .glass {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.3s ease;
+    }
+    .glass:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,0,102,0.18);
+      transform: translateY(-2px);
+    }
+    nav a {
+      position: relative;
+      transition: color 0.2s ease;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #FF0066;
+      transition: width 0.3s ease;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    .btn-primary {
+      background: #FF4DA6;
+      color: #000;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(255,77,166,0.4);
+    }
+    .btn-primary:hover {
+      background: #FF2D95;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255,45,149,0.5);
+    }
+
+    /* Masonry gallery */
+    .masonry {
+      column-count: 3;
+      column-gap: 1rem;
+    }
+    @media (max-width: 1024px) {
+      .masonry { column-count: 2; }
+    }
+    @media (max-width: 640px) {
+      .masonry { column-count: 1; }
+    }
+    @media (min-width: 1400px) {
+      .masonry { column-count: 4; }
+    }
+    .masonry-item {
+      width: 100%;
+      display: block;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      filter: grayscale(60%) contrast(1);
+      object-fit: cover;
+    }
+    .masonry-item:hover {
+      transform: translateY(-6px);
+      filter: grayscale(0) contrast(1.02);
+    }
+
+    @media (max-width: 1024px) {
+      .hero-art { height: 300px; }
+    }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.6s cubic-bezier(.2,.9,.2,1), transform 0.6s cubic-bezier(.2,.9,.2,1); }
+    .reveal.is-revealed { opacity: 1; transform: none; }
+
+    h1, h2, h3 {
+      letter-spacing: -0.02em;
+      font-family: 'Oswald', 'Inter', ui-sans-serif, system-ui;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .hero-title {
+      letter-spacing: -0.03em;
+      font-weight: 800;
+    }
+    .hero-art {
+      height: 420px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255,0,102,0.12), rgba(230,0,80,0.05));
+      box-shadow: 0 20px 60px rgba(255,0,102,0.05);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .hero-art:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 80px rgba(230,0,80,0.08);
+    }
+    .btn-primary {
+      background: #FF0066;
+      color: #000;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(255,0,102,0.42);
+      text-transform: uppercase;
+      padding: 0.9rem 2.1rem;
+      border-radius: 12px;
+      letter-spacing: 0.06em;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      background: #E60050;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(230,0,80,0.5);
+    }
   </style>
 </head>
 <body class="bg-[#0A0A0B] text-zinc-200">
-  <header class="sticky top-0 z-50 bg-[#0A0A0B]/80 backdrop-blur border-b border-white/5">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <h1 class="text-xl font-extrabold text-white tracking-tight">InfluencerOps</h1>
-      <nav class="hidden md:flex items-center gap-8 text-sm">
-        <a href="#services" class="hover:text-white/90">Services</a>
-        <a href="#about" class="hover:text-white/90">About</a>
-        <a href="#contact" class="hover:text-white/90">Contact</a>
+  <header class="sticky top-0 z-50 bg-black/90 backdrop-blur-xl border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      <h1 class="text-xl font-black text-white tracking-tight">InfluencerOps</h1>
+      <nav class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="#services" class="hover:text-brand">Services</a>
+        <a href="#about" class="hover:text-brand">About</a>
+        <a href="#contact" class="hover:text-brand">Contact</a>
       </nav>
     </div>
   </header>
 
   <!-- HERO SECTION -->
-  <section class="relative py-28 px-6 text-center overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-b from-brand/20 to-transparent blur-3xl -z-10"></div>
-    <div class="max-w-3xl mx-auto">
-      <h2 class="text-5xl md:text-6xl font-extrabold mb-6 text-white">AI-Powered Operations for Influencers & Agencies</h2>
-      <p class="text-lg text-zinc-300 mb-8">AI agent engineering, contract management, and financial operations — everything you need to run your influencer business or agency like a pro.</p>
-      <a href="#services" class="inline-block px-6 py-3 bg-brand text-white rounded-xl shadow-lg hover:opacity-90 font-semibold">Explore Services</a>
+  <section class="relative py-32 md:py-40 px-6 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-brand/10 via-brand-orange/5 to-transparent blur-3xl -z-10"></div>
+    <div class="max-w-5xl mx-auto text-left md:text-left grid grid-cols-1 md:grid-cols-2 items-center gap-8">
+      <div class="hero-copy max-w-lg mx-auto md:mx-0 text-center md:text-left reveal-on-scroll">
+        <h2 class="text-6xl md:text-7xl lg:text-[96px] font-black mb-8 text-white leading-[1.02] hero-title">AI-Powered Operations for Influencers & Agencies</h2>
+        <p class="text-xl md:text-2xl text-zinc-400 mb-10 font-light">AI agent engineering, contract management, and financial operations — everything you need to run your influencer business or agency like a pro.</p>
+        <a href="#services" class="btn-primary inline-block font-bold text-lg">Explore Services</a>
+      </div>
+      <div class="hero-art hidden md:block" aria-hidden="true"></div>
     </div>
   </section>
 
   <!-- SERVICES SECTION -->
-  <section id="services" class="py-20 px-6 bg-white/5 border-y border-white/10">
-    <div class="max-w-6xl mx-auto text-center">
-      <h2 class="text-4xl font-extrabold text-white mb-4">Our Core Services</h2>
-      <p class="text-zinc-400 max-w-2xl mx-auto mb-12">Whether you're an independent creator or running an influencer agency, we handle the technical, legal, and financial operations so you can focus on what matters — creating content and growing your talent.</p>
-      <div class="grid md:grid-cols-3 gap-8">
+  <section id="services" class="py-28 px-6 bg-black border-y border-white/10">
+    <div class="max-w-7xl mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-black text-white mb-6">Our Core Services</h2>
+      <p class="text-zinc-400 text-lg max-w-2xl mx-auto mb-16 font-light">Whether you're an independent creator or running an influencer agency, we handle the technical, legal, and financial operations so you can focus on what matters — creating content and growing your talent.</p>
+      <div class="grid md:grid-cols-3 gap-6">
 
-        <div class="glass p-6 rounded-2xl">
-          <div class="text-4xl mb-4">🤖</div>
-          <h3 class="text-xl font-bold text-white mb-3">AI Agent Engineering</h3>
-          <p class="text-zinc-400 mb-4">Custom AI agents built specifically for your brand — intelligently managing your email inbox with your unique voice and tone.</p>
-          <ul class="text-zinc-300 text-sm text-left space-y-2">
-            <li>• Custom-trained on your writing style</li>
-            <li>• Automates email categorisation and responses</li>
-            <li>• Filters and prioritises brand deal inquiries</li>
-            <li>• 24/7 intelligent inbox management</li>
+        <div class="glass p-10 rounded-3xl text-left reveal-on-scroll">
+          <div class="text-5xl mb-6">🤖</div>
+          <h3 class="text-2xl font-bold text-white mb-4">AI Agent Engineering</h3>
+          <p class="text-zinc-400 mb-6 leading-relaxed">Custom AI agents built specifically for your brand — intelligently managing your email inbox with your unique voice and tone.</p>
+          <ul class="text-zinc-300 space-y-3">
+            <li class="flex items-start"><span class="text-brand mr-3 font-bold">→</span> Custom-trained on your writing style</li>
+            <li class="flex items-start"><span class="text-brand mr-3 font-bold">→</span> Automates email categorisation and responses</li>
+            <li class="flex items-start"><span class="text-brand mr-3 font-bold">→</span> Filters and prioritises brand deal inquiries</li>
+            <li class="flex items-start"><span class="text-brand mr-3 font-bold">→</span> 24/7 intelligent inbox management</li>
           </ul>
         </div>
 
-        <div class="glass p-6 rounded-2xl">
-          <div class="text-4xl mb-4">📋</div>
-          <h3 class="text-xl font-bold text-white mb-3">Contract Oversight & Management</h3>
-          <p class="text-zinc-400 mb-4">We review, organise, and track all your brand deals, sponsorships, and partnerships — ensuring you never miss a deadline or payment.</p>
-          <ul class="text-zinc-300 text-sm text-left space-y-2">
-            <li>• Contract review and red flag identification</li>
-            <li>• Deliverable tracking and deadline reminders</li>
-            <li>• Centralised dashboard for all active deals</li>
-            <li>• Payment milestone monitoring</li>
+        <div class="glass p-10 rounded-3xl text-left reveal-on-scroll">
+          <div class="text-5xl mb-6">📋</div>
+          <h3 class="text-2xl font-bold text-white mb-4">Contract Oversight & Management</h3>
+          <p class="text-zinc-400 mb-6 leading-relaxed">We review, organise, and track all your brand deals, sponsorships, and partnerships — ensuring you never miss a deadline or payment.</p>
+          <ul class="text-zinc-300 space-y-3">
+            <li class="flex items-start"><span class="text-brand mr-3 font-bold">→</span> Contract review and red flag identification</li>
+            <li class="flex items-start"><span class="text-brand mr-3 font-bold">→</span> Deliverable tracking and deadline reminders</li>
+            <li class="flex items-start"><span class="text-brand mr-3 font-bold">→</span> Centralised dashboard for all active deals</li>
+            <li class="flex items-start"><span class="text-brand mr-3 font-bold">→</span> Payment milestone monitoring</li>
           </ul>
         </div>
 
-        <div class="glass p-6 rounded-2xl">
-          <div class="text-4xl mb-4">💰</div>
-          <h3 class="text-xl font-bold text-white mb-3">Financial Management & Tax Prep</h3>
-          <p class="text-zinc-400 mb-4">Professional invoicing, expense tracking, and tax return preparation — keeping your influencer finances organised and audit-ready.</p>
-          <ul class="text-zinc-300 text-sm text-left space-y-2">
-            <li>• Custom invoice generation and tracking</li>
-            <li>• Automated expense categorisation</li>
-            <li>• Tax return preparation and documentation</li>
-            <li>• Revenue analytics and financial reporting</li>
+        <div class="glass p-10 rounded-3xl text-left reveal-on-scroll">
+          <div class="text-5xl mb-6">💰</div>
+          <h3 class="text-2xl font-bold text-white mb-4">Financial Management & Tax Prep</h3>
+          <p class="text-zinc-400 mb-6 leading-relaxed">Professional invoicing, expense tracking, and tax return preparation — keeping your influencer finances organised and audit-ready.</p>
+          <ul class="text-zinc-300 space-y-3">
+            <li class="flex items-start"><span class="text-brand mr-3 font-bold">→</span> Custom invoice generation and tracking</li>
+            <li class="flex items-start"><span class="text-brand mr-3 font-bold">→</span> Automated expense categorisation</li>
+            <li class="flex items-start"><span class="text-brand mr-3 font-bold">→</span> Tax return preparation and documentation</li>
+            <li class="flex items-start"><span class="text-brand mr-3 font-bold">→</span> Revenue analytics and financial reporting</li>
           </ul>
         </div>
 
@@ -95,53 +216,71 @@
   </section>
 
   <!-- WHY SECTION -->
-  <section class="py-20 px-6">
-    <div class="max-w-5xl mx-auto text-center">
-      <h2 class="text-4xl font-extrabold text-white mb-4">Why InfluencerOps?</h2>
-      <p class="text-zinc-400 max-w-3xl mx-auto mb-8">Whether you're an independent creator juggling content and business operations, or an agency managing multiple talent rosters — the administrative burden can be overwhelming. InfluencerOps changes that. We provide the infrastructure and expertise to streamline your operations, letting you focus on creativity and growth.</p>
-      <div class="mt-10 grid md:grid-cols-3 gap-8">
-        <div class="glass p-6 rounded-2xl">
-          <h3 class="font-semibold text-white mb-2">Your Operations Partner</h3>
-          <p class="text-zinc-400 text-sm">We handle the business operations so you can focus on what you do best — creating content, building brands, and growing talent.</p>
+  <section class="py-28 px-6">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-black text-white mb-6">Why InfluencerOps?</h2>
+      <p class="text-zinc-400 text-lg max-w-3xl mx-auto mb-12 font-light leading-relaxed">Whether you're an independent creator juggling content and business operations, or an agency managing multiple talent rosters — the administrative burden can be overwhelming. InfluencerOps changes that. We provide the infrastructure and expertise to streamline your operations, letting you focus on creativity and growth.</p>
+      <div class="mt-16 grid md:grid-cols-3 gap-6">
+        <div class="glass p-10 rounded-3xl reveal-on-scroll">
+          <h3 class="font-bold text-white mb-3 text-xl">Your Operations Partner</h3>
+          <p class="text-zinc-400 leading-relaxed">We handle the business operations so you can focus on what you do best — creating content, building brands, and growing talent.</p>
         </div>
-        <div class="glass p-6 rounded-2xl">
-          <h3 class="font-semibold text-white mb-2">AI-Powered Efficiency</h3>
-          <p class="text-zinc-400 text-sm">Cutting-edge AI technology combined with hands-on business expertise — the best of both worlds.</p>
+        <div class="glass p-10 rounded-3xl reveal-on-scroll">
+          <h3 class="font-bold text-white mb-3 text-xl">AI-Powered Efficiency</h3>
+          <p class="text-zinc-400 leading-relaxed">Cutting-edge AI technology combined with hands-on business expertise — the best of both worlds.</p>
         </div>
-        <div class="glass p-6 rounded-2xl">
-          <h3 class="font-semibold text-white mb-2">Scales With You</h3>
-          <p class="text-zinc-400 text-sm">Whether you're just starting out or managing multiple revenue streams, our systems grow with your business.</p>
+        <div class="glass p-10 rounded-3xl reveal-on-scroll">
+          <h3 class="font-bold text-white mb-3 text-xl">Scales With You</h3>
+          <p class="text-zinc-400 leading-relaxed">Whether you're just starting out or managing multiple revenue streams, our systems grow with your business.</p>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- GALLERY / WORK -->
+  <section id="work" class="py-24 px-6 bg-black border-t border-white/6">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-black text-white mb-8">Selected Work</h2>
+      <p class="text-zinc-400 max-w-2xl mx-auto mb-10">A curated selection of projects to reflect the visual and strategic approach we take.</p>
+      <div class="masonry">
+        <img class="masonry-item reveal-on-scroll" src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?w=1200&q=60&auto=format&fit=crop" alt="Work 1">
+        <img class="masonry-item reveal-on-scroll" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=900&q=60&auto=format&fit=crop" alt="Work 2">
+        <img class="masonry-item reveal-on-scroll" src="https://images.unsplash.com/photo-1532619675605-3f7a24b6b3f4?w=1200&q=60&auto=format&fit=crop" alt="Work 3">
+        <img class="masonry-item reveal-on-scroll" src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=800&q=60&auto=format&fit=crop" alt="Work 4">
+        <img class="masonry-item reveal-on-scroll" src="https://images.unsplash.com/photo-1517242025821-3a1b3b5af0f5?w=1000&q=60&auto=format&fit=crop" alt="Work 5">
+        <img class="masonry-item reveal-on-scroll" src="https://images.unsplash.com/photo-1474631245212-32dc3c8310c6?w=900&q=60&auto=format&fit=crop" alt="Work 6">
+        <img class="masonry-item reveal-on-scroll" src="https://images.unsplash.com/photo-1506765515384-028b60a970df?w=1100&q=60&auto=format&fit=crop" alt="Work 7">
+        <img class="masonry-item reveal-on-scroll" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1000&q=60&auto=format&fit=crop" alt="Work 8">
+      </div>
+    </div>
+  </section>
+
   <!-- ABOUT ME (Inserted Section) -->
-  <section id="about" class="py-20 px-6 bg-white/5 border-y border-white/10">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-4xl font-extrabold text-white mb-4">About Me</h2>
-      <p class="text-zinc-400 max-w-2xl mx-auto mb-10">
+  <section id="about" class="py-28 px-6 bg-black border-y border-white/10">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-black text-white mb-6">About Me</h2>
+      <p class="text-zinc-400 text-lg max-w-2xl mx-auto mb-16 font-light leading-relaxed">
         I'm Harry Collins — an operator, systems-builder, and AI workflow engineer dedicated to helping influencers and agencies run smoother, smarter businesses. With a background in operations, automation, and creator-economy strategy, I specialise in building the invisible infrastructure that keeps your business running flawlessly.
       </p>
 
-      <div class="grid md:grid-cols-3 gap-8 mt-8">
-        <div class="glass p-6 rounded-2xl">
-          <h3 class="text-white font-semibold mb-2">AI & Automation Expertise</h3>
-          <p class="text-zinc-400 text-sm">
+      <div class="grid md:grid-cols-3 gap-6 mt-12">
+        <div class="glass p-10 rounded-3xl reveal-on-scroll">
+          <h3 class="text-white font-bold mb-3 text-xl">AI & Automation Expertise</h3>
+          <p class="text-zinc-400 leading-relaxed">
             I design AI agents and automated workflows that replace repetitive manual work, giving creators more time to focus on what actually grows their brand.
           </p>
         </div>
 
-        <div class="glass p-6 rounded-2xl">
-          <h3 class="text-white font-semibold mb-2">Operations & Systems</h3>
-          <p class="text-zinc-400 text-sm">
+        <div class="glass p-10 rounded-3xl reveal-on-scroll">
+          <h3 class="text-white font-bold mb-3 text-xl">Operations & Systems</h3>
+          <p class="text-zinc-400 leading-relaxed">
             From contract management to deliverable tracking, I build structured systems that prevent things from slipping through the cracks.
           </p>
         </div>
 
-        <div class="glass p-6 rounded-2xl">
-          <h3 class="text-white font-semibold mb-2">Creator-Economy Focused</h3>
-          <p class="text-zinc-400 text-sm">
+        <div class="glass p-10 rounded-3xl reveal-on-scroll">
+          <h3 class="text-white font-bold mb-3 text-xl">Creator-Economy Focused</h3>
+          <p class="text-zinc-400 leading-relaxed">
             Influencers and agencies have unique operational needs — I help you run like a high-performing business without the overhead of a full operations team.
           </p>
         </div>
@@ -150,32 +289,49 @@
   </section>
 
   <!-- CTA -->
-  <section class="py-20 text-center bg-brand/10">
-    <h2 class="text-3xl font-extrabold text-white mb-4">Ready to streamline your operations?</h2>
-    <p class="text-zinc-300 mb-6">Book a free consultation and let's build your personalised operations system.</p>
-    <a href="#contact" class="px-6 py-3 bg-brand text-white rounded-xl font-semibold hover:opacity-90">Get Started</a>
+  <section class="py-32 text-center bg-gradient-to-b from-brand/5 to-brand-orange/5">
+    <h2 class="text-4xl md:text-5xl font-black text-white mb-6">Ready to streamline your operations?</h2>
+    <p class="text-zinc-300 text-lg mb-10 font-light">Book a free consultation and let's build your personalised operations system.</p>
+    <a href="#contact" class="btn-primary px-8 py-4 rounded-full font-bold text-lg">Get Started</a>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="py-20 px-6">
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="text-4xl font-extrabold text-white mb-4">Let's Talk</h2>
-      <p class="text-zinc-400 mb-8">Tell us about your business, and we'll create your personalised operations roadmap.</p>
+  <section id="contact" class="py-28 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-black text-white mb-6">Let's Talk</h2>
+      <p class="text-zinc-400 text-lg mb-12 font-light">Tell us about your business, and we'll create your personalised operations roadmap.</p>
 
-      <form class="glass p-6 rounded-2xl space-y-4" action="https://formspree.io/f/xjkzbjkw" method="POST">
-        <input type="text" name="name" placeholder="Your Name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand/60" required>
-        <input type="email" name="email" placeholder="Your Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand/60" required>
-        <textarea name="message" rows="5" placeholder="What operational challenges are you currently facing?" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand/60" required></textarea>
-        <button type="submit" class="w-full bg-brand text-white py-3 rounded-xl font-semibold hover:opacity-90">Send Message</button>
+      <form class="glass p-10 rounded-3xl space-y-6 reveal-on-scroll" action="https://formspree.io/f/xjkzbjkw" method="POST">
+        <input type="text" name="name" placeholder="Your Name" class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
+        <input type="email" name="email" placeholder="Your Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
+        <textarea name="message" rows="6" placeholder="What operational challenges are you currently facing?" class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all resize-none" required></textarea>
+        <button type="submit" class="btn-primary w-full py-4 rounded-full font-bold text-lg">Send Message</button>
       </form>
     </div>
   </section>
 
-  <footer class="text-center py-8 border-t border-white/10 text-zinc-400 text-sm">
-    © <span id="year"></span> InfluencerOps. AI-Powered Operations for Influencers & Agencies.
+  <footer class="text-center py-10 border-t border-white/10 text-zinc-500 text-sm">
+    <p>© <span id="year"></span> InfluencerOps. AI-Powered Operations for Influencers & Agencies.</p>
   </footer>
 
   <script>
+    // Reveal-on-scroll: uses IntersectionObserver to add is-revealed class
+    (function(){
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-revealed');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+        el.classList.add('reveal');
+        io.observe(el);
+      });
+    })();
+
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
