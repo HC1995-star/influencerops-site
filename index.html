@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,18 +9,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: { sans: ['Poppins','Inter', 'ui-sans-serif', 'system-ui'], display: ['Poppins','Oswald','Inter', 'ui-sans-serif', 'system-ui'] },
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'], display: ['Poppins','Inter', 'ui-sans-serif', 'system-ui'] },
           colors: {
             brand: {
-              DEFAULT: '#FF0066',
-              orange: '#E60050'
+              DEFAULT: '#FD7024',
+              orange: '#FD7024',
+              cream: '#FFF0B3'
             }
           }
         }
@@ -31,18 +30,57 @@
     html { scroll-behavior: smooth; scroll-padding-top: 80px; }
     body { font-size: 18px; line-height: 1.7; }
 
-    .glass {
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(0,0,0,0.08);
-      color: #1a1a1a;
-      transition: background 0.28s ease, border-color 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
-      will-change: transform, box-shadow;
+    /* Hero background with dark gradient */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+      z-index: -1;
     }
-    .glass:hover {
-      background: rgba(255,255,255,0.96);
-      border-color: rgba(255,0,102,0.22);
-      transform: translateY(-2px);
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(253,112,36,0.08) 1px, transparent 0);
+      background-size: 40px 40px;
+      opacity: 0.4;
+    }
+
+    /* Color block card overlay */
+    .color-block-card {
+      background: #FD7024;
+      color: #FFF0B3;
+      border-radius: 24px;
+      padding: 3rem;
+      box-shadow: 0 24px 64px rgba(253,112,36,0.4);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,240,179,0.1);
+    }
+    .color-block-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,240,179,0.12);
+      border-radius: 50%;
+      filter: blur(80px);
+    }
+
+    /* Section color blocks */
+    .section-orange {
+      background: #FD7024;
+      color: #FFF0B3;
+    }
+    .section-cream {
+      background: #FFF0B3;
+      color: #1a1a1a;
+    }
+    .section-dark {
+      background: #1a1a1a;
+      color: #FFF0B3;
     }
 
     /* Interactive card behaviour */
@@ -52,31 +90,25 @@
       transition: transform 0.22s cubic-bezier(.2,.9,.2,1), box-shadow 0.22s cubic-bezier(.2,.9,.2,1);
       transform: translateZ(0);
       will-change: transform, box-shadow;
-      transform-style: preserve-3d;
       cursor: pointer;
     }
-    .card:hover,
-    .card:focus-visible {
+    .card:hover {
       transform: translateY(-4px) scale(1.01);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
-      z-index: 10;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.15);
     }
-    .card:active { transform: translateY(-2px) scale(1.0); }
-    .card:focus-visible { outline: 3px solid rgba(255,0,102,0.12); outline-offset: 8px; border-color: rgba(255,0,102,0.18); }
 
     .card::after {
       content: '';
       position: absolute;
       inset: 0;
-      border-radius: 12px;
+      border-radius: 24px;
       pointer-events: none;
-      background: linear-gradient(120deg, rgba(255,255,255,0.00) 30%, rgba(255,255,255,0.06) 55%, rgba(255,255,255,0.00) 100%);
+      background: linear-gradient(120deg, rgba(255,255,255,0.00) 30%, rgba(255,255,255,0.08) 55%, rgba(255,255,255,0.00) 100%);
       opacity: 0;
       transform: translateY(6px);
       transition: opacity 0.24s ease, transform 0.24s ease;
     }
-    .card:hover::after,
-    .card:focus-visible::after {
+    .card:hover::after {
       opacity: 1;
       transform: translateY(0);
     }
@@ -90,89 +122,104 @@
     .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.6s cubic-bezier(.2,.9,.2,1), transform 0.6s cubic-bezier(.2,.9,.2,1); }
     .reveal.is-revealed { opacity: 1; transform: none; }
 
-    /* Staggered entrance for cards */
-    .reveal.card { transform: translateY(16px) scale(0.985); }
-    .reveal.card.is-revealed { opacity: 1; transform: translateY(0) scale(1); transition-timing-function: cubic-bezier(.2,.9,.2,1); }
-
-    /* Section spacing */
-    section {
-      padding-top: 6rem;
-      padding-bottom: 6rem;
-    }
-    @media (max-width: 768px) {
-      section {
-        padding-top: 4rem;
-        padding-bottom: 4rem;
-      }
-    }
-
     h1, h2, h3 {
-      letter-spacing: -0.02em;
-      font-family: 'Poppins', 'Oswald', 'Inter', ui-sans-serif, system-ui;
-      text-transform: none;
-      line-height: 1;
+      letter-spacing: -0.03em;
+      font-family: 'Poppins', 'Inter', ui-sans-serif, system-ui;
+      line-height: 0.95;
       font-weight: 900;
+      text-transform: lowercase;
     }
     .hero-title {
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
       font-weight: 900;
+      text-transform: lowercase;
     }
 
-    /* hero art styles + responsive */
-    .hero-art {
-      height: 420px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(255,0,102,0.12), rgba(230,0,80,0.05));
-      box-shadow: 0 20px 60px rgba(255,0,102,0.05);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      display:flex; align-items:center; justify-content:center; padding:2rem;
+    /* Button styles */
+    .btn-primary {
+      background: #FFF0B3;
+      color: #1a1a1a;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(255,240,179,0.4);
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      border-radius: 12px;
+      letter-spacing: 0.05em;
+      display: inline-block;
+      font-weight: 700;
+      font-size: 0.875rem;
     }
-    @media (max-width: 1024px) {
-      .hero-art { height: 250px; }
-    }
-    @media (max-width: 768px) {
-      .hero-art { height: 200px; margin-top: 2rem; }
-    }
-
-    /* hero inbox SVG animation */
-    .hero-inbox-svg .mail { transform: translateY(12px); opacity: 0; }
-    .hero-inbox-svg .mail-1 { animation: floatIn 600ms cubic-bezier(.2,.9,.2,1) 120ms forwards; }
-    .hero-inbox-svg .mail-2 { animation: floatIn 600ms cubic-bezier(.2,.9,.2,1) 260ms forwards; }
-    .hero-inbox-svg .mail-3 { animation: floatIn 600ms cubic-bezier(.2,.9,.2,1) 400ms forwards; }
-    .hero-inbox-svg .mail-4 { animation: floatIn 600ms cubic-bezier(.2,.9,.2,1) 540ms forwards; }
-    @keyframes floatIn { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-    /* Feature card visuals */
-    .feature-art { width: 120px; height: 120px; display: block; }
-    .feature-card h3 { font-size: 1.25rem; }
-    .feature-card p { color: #374151; }
-    .feature-card svg { transition: transform 0.28s ease, filter 0.28s ease; }
-    .feature-card:hover svg { transform: scale(1.04); filter: saturate(1.06); }
-
-    /* Make the middle service card stand out */
-    .featured-card {
-      border: 2px solid rgba(255,0,102,0.2);
-      box-shadow: 0 8px 32px rgba(255,0,102,0.12);
-    }
-    .featured-card:hover { border-color: rgba(255,0,102,0.3); }
-
-    @media (max-width: 768px) {
-      .feature-art { width: 80px; height: 80px; }
-      .feature-card h3 { font-size: 1.125rem; }
-      .feature-card p { font-size: 0.875rem; }
+    .btn-primary:hover {
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255,240,179,0.6);
     }
 
-    input:focus,
-    textarea:focus,
-    button:focus {
-      outline: 3px solid #FF0066 !important;
-      outline-offset: 2px;
-      border-color: #FF0066 !important;
+    .btn-secondary {
+      background: transparent;
+      color: #FFF0B3;
+      border: 2px solid rgba(255,240,179,0.3);
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      padding: 0.75rem 1.85rem;
+      border-radius: 12px;
+      letter-spacing: 0.05em;
+      display: inline-block;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+    .btn-secondary:hover {
+      background: rgba(255,240,179,0.1);
+      border-color: rgba(255,240,179,0.5);
     }
 
-    .btn-primary:active {
-      transform: translateY(0) scale(0.98);
-      box-shadow: 0 2px 8px rgba(255,0,102,0.3);
+    .btn-tertiary {
+      background: #FD7024;
+      color: #FFF0B3;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(253,112,36,0.42);
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      border-radius: 12px;
+      letter-spacing: 0.05em;
+      display: inline-block;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+    .btn-tertiary:hover {
+      background: #e66520;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(253,112,36,0.6);
+    }
+
+    /* Glass cards for services */
+    .glass-card {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 24px;
+      padding: 2.5rem;
+      transition: all 0.3s ease;
+    }
+    .glass-card:hover {
+      background: rgba(255,255,255,1);
+      border-color: rgba(253,112,36,0.2);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    }
+
+    /* Dark glass cards for features */
+    .dark-glass-card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,240,179,0.1);
+      border-radius: 24px;
+      padding: 2.5rem;
+      transition: all 0.3s ease;
+    }
+    .dark-glass-card:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,240,179,0.2);
     }
 
     nav a {
@@ -186,306 +233,273 @@
       left: 0;
       width: 0;
       height: 2px;
-      background: #FF0066;
+      background: currentColor;
       transition: width 0.3s ease;
     }
     nav a:hover::after {
       width: 100%;
     }
-    /* Masonry gallery */
-    .masonry {
-      column-count: 3;
-      column-gap: 1rem;
-    }
-    @media (max-width: 1024px) {
-      .masonry { column-count: 2; }
-    }
-    @media (max-width: 640px) {
-      .masonry { column-count: 1; }
-    }
-    @media (min-width: 1400px) {
-      .masonry { column-count: 4; }
-    }
-    .masonry-item {
-      width: 100%;
-      display: block;
-      margin-bottom: 1rem;
-      border-radius: 12px;
-      transition: transform 0.3s ease, filter 0.3s ease;
-      filter: grayscale(60%) contrast(1);
-      object-fit: cover;
-    }
-    .masonry-item:hover {
-      transform: translateY(-6px);
-      filter: grayscale(0) contrast(1.02);
+
+    input:focus,
+    textarea:focus,
+    button:focus {
+      outline: 3px solid #FD7024 !important;
+      outline-offset: 2px;
     }
 
-    @media (max-width: 1024px) {
-      .hero-art { height: 300px; }
+    /* Floating orbs for visual interest */
+    .floating-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      animation: float 8s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-20px) translateX(10px); }
     }
 
-    /* Reveal on scroll */
-    .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.6s cubic-bezier(.2,.9,.2,1), transform 0.6s cubic-bezier(.2,.9,.2,1); }
-    .reveal.is-revealed { opacity: 1; transform: none; }
-
-    /* Staggered entrance for cards */
-    .reveal.card { transform: translateY(16px) scale(0.985); }
-    .reveal.card.is-revealed { opacity: 1; transform: translateY(0) scale(1); transition-timing-function: cubic-bezier(.2,.9,.2,1); }
-
-    h1, h2, h3 {
-      letter-spacing: -0.02em;
-      font-family: 'Poppins', 'Oswald', 'Inter', ui-sans-serif, system-ui;
-      text-transform: none;
-      line-height: 1;
-      font-weight: 900;
-    }
-    .hero-title {
-      letter-spacing: -0.03em;
-      font-weight: 900;
-    }
-    .hero-headline {
-      letter-spacing: -0.02em;
-      font-weight: 900;
-      line-height: 1.02;
-      margin-bottom: 0.5rem;
-    }
-
-    @media (min-width: 768px) {
-      .hero-title { font-size: 72px !important; }
-    }
-    @media (max-width: 767px) {
-      .hero-title { font-size: 48px !important; }
-    }
-
-
-    /* Feature card artwork */
-    .feature-art { width: 120px; height: 120px; display: block; }
-    .feature-card h3 { font-size: 1.25rem; }
-    .feature-card p { color: #374151; }
     @media (max-width: 768px) {
-      .feature-art { width: 80px; height: 80px; }
-      .feature-card h3 { font-size: 1.125rem; }
-    }
-    .btn-primary {
-      background: #FF0066;
-      color: #000;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 14px rgba(255,0,102,0.42);
-      text-transform: uppercase;
-      padding: 0.9rem 2.1rem;
-      border-radius: 12px;
-      letter-spacing: 0.06em;
-      display: inline-block;
-    }
-    .btn-primary:hover {
-      background: #E60050;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(230,0,80,0.5);
+      .color-block-card { padding: 2rem; }
+      h1, h2, h3 { letter-spacing: -0.02em; }
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-pink-50 via-purple-50 to-pink-100 text-black">
-  <a href="#main-content" class="fixed top-4 left-4 bg-brand text-white px-4 py-2 rounded-lg z-50 -translate-y-20 focus:translate-y-0 transition-transform">Skip to main content</a>
+<body class="text-black">
+  <a href="#main-content" class="fixed top-4 left-4 bg-brand-orange text-brand-cream px-4 py-2 rounded-lg z-50 -translate-y-20 focus:translate-y-0 transition-transform">Skip to main content</a>
   <main id="main-content">
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-black/10">
-    <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-      <h1 class="text-xl font-black text-black tracking-tight">CreatorOps</h1>
-      <nav class="hidden md:flex items-center gap-10 text-sm font-medium">
-        <a href="#services" class="hover:text-brand">Services</a>
-        <a href="#contact" class="hover:text-brand">Contact</a>
+
+  <!-- Minimalist Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <h1 class="text-lg font-black tracking-tight" style="color: #FFF0B3; text-transform: lowercase;">creatorops</h1>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium" style="color: rgba(255,240,179,0.8);">
+        <a href="#services" class="hover:text-brand-cream transition-colors">Services</a>
+        <a href="#contact" class="hover:text-brand-cream transition-colors">Contact</a>
+        <a href="#contact" class="btn-primary text-xs py-2 px-4">Log In</a>
       </nav>
     </div>
   </header>
 
   <!-- HERO SECTION -->
-  <section class="relative py-32 md:py-40 px-6 overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-b from-brand/10 via-brand-orange/5 to-transparent blur-3xl -z-10"></div>
-    <div class="max-w-5xl mx-auto text-left md:text-left grid grid-cols-1 md:grid-cols-2 items-center gap-8">
-      <div class="hero-copy max-w-lg mx-auto md:mx-0 text-center md:text-left reveal-on-scroll">
-        <h2 class="text-6xl md:text-7xl lg:text-[96px] font-black mb-8 text-black leading-[1.02] hero-title">The AI That Runs Your Business While You Create</h2>
-        <a href="#services" class="btn-primary inline-block font-bold text-lg">Explore Services</a>
-      </div>
-      <div class="hero-art" aria-hidden="true">
-        <div class="hero-inbox mx-auto" aria-hidden="true">
-          <svg class="hero-inbox-svg" viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
-            <defs>
-              <linearGradient id="g1" x1="0" x2="1">
-                <stop offset="0%" stop-color="#FF0066" stop-opacity="0.14"/>
-                <stop offset="100%" stop-color="#E60050" stop-opacity="0.06"/>
-              </linearGradient>
-            </defs>
-            <!-- Dashboard background -->
-            <rect x="8" y="8" width="584" height="344" rx="18" fill="#fff" stroke="#F3F4F6"/>
+  <section class="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
+    <div class="hero-bg"></div>
 
-            <!-- Left column: AI agent panel -->
-            <rect x="28" y="28" width="160" height="304" rx="12" fill="#FBFAFF" stroke="#F3F4F6"/>
-            <circle cx="48" cy="52" r="6" fill="#FF0066"/>
-            <rect x="70" y="44" width="88" height="12" rx="6" fill="#F3F4F6"/>
+    <!-- Floating orbs for visual interest -->
+    <div class="floating-orb" style="top: 10%; left: 10%; width: 300px; height: 300px; background: rgba(253,112,36,0.15);"></div>
+    <div class="floating-orb" style="bottom: 15%; right: 15%; width: 400px; height: 400px; background: rgba(255,240,179,0.08); animation-delay: -4s;"></div>
 
-            <!-- Right: inbox area -->
-            <rect x="204" y="28" width="372" height="304" rx="12" fill="#fff"/>
+    <div class="max-w-7xl mx-auto w-full py-20 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-            <!-- Email cards (animated) -->
-            <g class="mails" fill="#F9FAFB">
-              <rect class="mail mail-1" x="224" y="44" width="328" height="52" rx="10" fill="#fff" stroke="#F3F4F6"/>
-              <rect class="mail mail-2" x="224" y="108" width="304" height="44" rx="8" fill="#fff" stroke="#F3F4F6"/>
-              <rect class="mail mail-3" x="224" y="164" width="280" height="44" rx="8" fill="#fff" stroke="#F3F4F6"/>
-              <rect class="mail mail-4" x="224" y="220" width="260" height="44" rx="8" fill="#fff" stroke="#F3F4F6"/>
-            </g>
+        <!-- Left: Minimal branding -->
+        <div class="reveal">
+          <div class="inline-block mb-8 px-4 py-2 rounded-full border border-brand-cream/20 text-brand-cream/70 text-xs uppercase tracking-wider font-semibold">
+            AI-Powered Operations
+          </div>
 
-            <!-- Agent activity indicator -->
-            <g class="agent-indicator">
-              <circle cx="256" cy="296" r="6" fill="#3B82F6"/>
-              <text x="270" y="300" font-size="12" fill="#6B7280">Scanning your inbox</text>
-            </g>
+          <!-- Large color block card -->
+          <div class="color-block-card reveal" style="transition-delay: 0.2s">
+            <h2 class="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-[0.9] hero-title" style="color: #FFF0B3;">
+              creatorops
+            </h2>
 
-            <!-- Accent gradient overlay -->
-            <rect x="204" y="28" width="372" height="304" rx="12" fill="url(#g1)" opacity="0.06"/>
-          </svg>
+            <!-- Simple icon -->
+            <div class="w-16 h-16 mb-6 flex items-center justify-center">
+              <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#FFF0B3" stroke-width="2" opacity="0.7">
+                <circle cx="32" cy="16" r="4"/>
+                <circle cx="16" cy="32" r="4"/>
+                <circle cx="48" cy="32" r="4"/>
+                <circle cx="32" cy="48" r="4"/>
+                <line x1="32" y1="20" x2="32" y2="28"/>
+                <line x1="20" y1="32" x2="28" y2="32"/>
+                <line x1="36" y1="32" x2="44" y2="32"/>
+                <line x1="32" y1="36" x2="32" y2="44"/>
+              </svg>
+            </div>
+
+            <p class="text-xl md:text-2xl mb-8 leading-relaxed opacity-90 font-light">
+              Leverage AI to grow valuable skills through immersive realistic role play scenarios
+            </p>
+
+            <div class="flex flex-wrap gap-4">
+              <a href="#services" class="btn-primary">Contact Sales</a>
+              <a href="#contact" class="btn-secondary">
+                Log In
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Minimalist visual -->
+        <div class="hidden lg:block reveal" style="transition-delay: 0.4s">
+          <div class="relative h-96">
+            <!-- Abstract geometric shape -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-full opacity-20">
+                <circle cx="200" cy="200" r="150" fill="none" stroke="#FFF0B3" stroke-width="1"/>
+                <circle cx="200" cy="200" r="100" fill="none" stroke="#FFF0B3" stroke-width="1" opacity="0.6"/>
+                <circle cx="200" cy="200" r="50" fill="none" stroke="#FD7024" stroke-width="2"/>
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- SERVICES SECTION -->
-  <section id="services" class="py-28 px-6 border-y border-black/10">
-    <div class="max-w-7xl mx-auto text-center">
-      <h2 class="text-4xl md:text-5xl font-black text-black mb-6">Our Core Services</h2>
-      <p class="text-black text-lg max-w-2xl mx-auto mb-16 font-light">Whether you're an independent creator or running a creator agency, we handle the technical, legal, and financial operations so you can focus on what matters — creating content and growing your talent.</p>
+  <section id="services" class="py-32 px-6 section-cream">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-black mb-6" style="color: #1a1a1a; text-transform: lowercase;">our core services</h2>
+        <p class="text-lg max-w-2xl mx-auto font-light opacity-80">Whether you're an independent creator or running a creator agency, we handle the technical, legal, and financial operations so you can focus on what matters.</p>
+      </div>
+
       <div class="grid md:grid-cols-3 gap-6">
-
-        <a href="#contact" class="glass p-10 rounded-3xl text-left reveal-on-scroll card" aria-label="AI Agent Engineering card">
-          <h3 class="text-2xl font-bold text-black mb-4">AI Agent Engineering</h3>
-          <p class="text-black mb-6 leading-relaxed">Custom AI agents built specifically for your brand — intelligently managing your email inbox with your unique voice and tone.</p>
-          <ul class="text-black space-y-3">
-            <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Custom-trained on your writing style</li>
-            <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Automates email categorisation and responses</li>
-            <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Filters and prioritises brand deal inquiries</li>
-            <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> 24/7 intelligent inbox management</li>
+        <a href="#contact" class="glass-card card reveal" style="transition-delay: 0.1s" aria-label="AI Agent Engineering">
+          <div class="w-12 h-12 mb-4 flex items-center justify-center rounded-full bg-brand-orange/10">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FD7024" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4" style="color: #1a1a1a; text-transform: lowercase;">AI Agent Engineering</h3>
+          <p class="mb-6 leading-relaxed text-gray-700 font-light">Custom AI agents built specifically for your brand — intelligently managing your email inbox with your unique voice and tone.</p>
+          <ul class="space-y-3 text-sm text-gray-600">
+            <li class="flex items-start"><span class="mr-3 font-bold text-brand-orange">→</span> Custom-trained on your writing style</li>
+            <li class="flex items-start"><span class="mr-3 font-bold text-brand-orange">→</span> Automates email categorisation and responses</li>
+            <li class="flex items-start"><span class="mr-3 font-bold text-brand-orange">→</span> Filters and prioritises brand deal inquiries</li>
+            <li class="flex items-start"><span class="mr-3 font-bold text-brand-orange">→</span> 24/7 intelligent inbox management</li>
           </ul>
         </a>
 
-        <a href="#contact" class="glass p-10 rounded-3xl text-left reveal-on-scroll card featured-card" aria-label="Contract Oversight & Management card">
-          <h3 class="text-2xl font-bold text-black mb-4">Contract Oversight & Management</h3>
-          <p class="text-black mb-6 leading-relaxed">We review, organise, and track all your brand deals, sponsorships, and partnerships — ensuring you never miss a deadline or payment.</p>
-          <ul class="text-black space-y-3">
-            <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Contract review and red flag identification</li>
-            <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Deliverable tracking and deadline reminders</li>
-            <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Centralised dashboard for all active deals</li>
-            <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Payment milestone monitoring</li>
+        <a href="#contact" class="glass-card card reveal" style="transition-delay: 0.2s; border: 2px solid rgba(253,112,36,0.2);" aria-label="Contract Oversight">
+          <div class="w-12 h-12 mb-4 flex items-center justify-center rounded-full bg-brand-orange/10">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FD7024" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4" style="color: #1a1a1a; text-transform: lowercase;">Contract Oversight</h3>
+          <p class="mb-6 leading-relaxed text-gray-700 font-light">We review, organise, and track all your brand deals, sponsorships, and partnerships — ensuring you never miss a deadline or payment.</p>
+          <ul class="space-y-3 text-sm text-gray-600">
+            <li class="flex items-start"><span class="mr-3 font-bold text-brand-orange">→</span> Contract review and red flag identification</li>
+            <li class="flex items-start"><span class="mr-3 font-bold text-brand-orange">→</span> Deliverable tracking and deadline reminders</li>
+            <li class="flex items-start"><span class="mr-3 font-bold text-brand-orange">→</span> Centralised dashboard for all active deals</li>
+            <li class="flex items-start"><span class="mr-3 font-bold text-brand-orange">→</span> Payment milestone monitoring</li>
           </ul>
         </a>
 
-        <a href="#contact" class="glass p-10 rounded-3xl text-left reveal-on-scroll card" aria-label="Financial Management & Tax Prep card">
-          <h3 class="text-2xl font-bold text-black mb-4">Financial Management & Tax Prep</h3>
-          <p class="text-black mb-6 leading-relaxed">Professional invoicing, expense tracking, and tax return preparation — keeping your creator finances organised and audit-ready.</p>
-          <ul class="text-black space-y-3">
-            <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Custom invoice generation and tracking</li>
-            <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Automated expense categorisation</li>
-            <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Tax return preparation and documentation</li>
-            <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Revenue analytics and financial reporting</li>
+        <a href="#contact" class="glass-card card reveal" style="transition-delay: 0.3s" aria-label="Financial Management">
+          <div class="w-12 h-12 mb-4 flex items-center justify-center rounded-full bg-brand-orange/10">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FD7024" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4" style="color: #1a1a1a; text-transform: lowercase;">Financial Management</h3>
+          <p class="mb-6 leading-relaxed text-gray-700 font-light">Professional invoicing, expense tracking, and tax return preparation — keeping your creator finances organised and audit-ready.</p>
+          <ul class="space-y-3 text-sm text-gray-600">
+            <li class="flex items-start"><span class="mr-3 font-bold text-brand-orange">→</span> Custom invoice generation and tracking</li>
+            <li class="flex items-start"><span class="mr-3 font-bold text-brand-orange">→</span> Automated expense categorisation</li>
+            <li class="flex items-start"><span class="mr-3 font-bold text-brand-orange">→</span> Tax return preparation and documentation</li>
+            <li class="flex items-start"><span class="mr-3 font-bold text-brand-orange">→</span> Revenue analytics and financial reporting</li>
           </ul>
         </a>
-
       </div>
     </div>
   </section>
 
-  <!-- FEATURES: Email Automation (replaces Why section) -->
-  <section id="features" class="py-28 px-6">
-    <div class="max-w-6xl mx-auto text-center">
-      <h2 class="text-4xl md:text-5xl font-black text-black mb-6">No setup. Just sign in</h2>
-      <div class="mt-12 grid md:grid-cols-3 gap-6">
-
-        <a href="#contact" class="glass p-8 rounded-3xl text-left reveal-on-scroll card feature-card" style="transition-delay:0.06s" aria-label="Connect to your inbox">
-          <div class="feature-art mb-6 mx-auto" aria-hidden="true">
-            <svg class="feature-icon" width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="6" y="6" width="108" height="108" rx="18" fill="#fff" stroke="#F3F4F6"/>
-              <g transform="translate(22,26)">
-                <rect x="0" y="12" width="76" height="44" rx="8" fill="#fff" stroke="#E6E7F2"/>
-                <path d="M4 22 L38 42 L72 22" stroke="#9CA3AF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="70" cy="12" r="6" fill="#FF0066" />
-              </g>
-            </svg>
-          </div>
-          <h3 class="text-2xl font-bold text-black mb-3">Connect to your inbox</h3>
-          <p class="text-zinc-600">Connect your email in seconds. Gmail or Outlook works instantly, with no setup required.</p>
-        </a>
-
-        <a href="#contact" class="glass p-8 rounded-3xl text-left reveal-on-scroll card feature-card" style="transition-delay:0.12s" aria-label="We learn your voice">
-          <div class="feature-art mb-6 mx-auto" aria-hidden="true">
-            <svg class="feature-icon" width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="6" y="6" width="108" height="108" rx="18" fill="#fff" stroke="#F3F4F6"/>
-              <g transform="translate(26,22)">
-                <path d="M18 12 C6 12 6 28 18 28 C30 28 30 12 18 12 Z" fill="#F3F4F6"/>
-                <path d="M18 6 C10 6 6 10 6 18" stroke="#9CA3AF" stroke-width="2" fill="none"/>
-                <circle cx="48" cy="18" r="4" fill="#FF0066" />
-                <rect x="0" y="46" width="76" height="8" rx="4" fill="#E6E7F2"/>
-              </g>
-            </svg>
-          </div>
-          <h3 class="text-2xl font-bold text-black mb-3">We learn your voice</h3>
-          <p class="text-zinc-600">Our technology adapts to your tone and writing style, ensuring context-aware responses that never feel generic.</p>
-        </a>
-
-        <a href="#contact" class="glass p-8 rounded-3xl text-left reveal-on-scroll card feature-card" style="transition-delay:0.18s" aria-label="Ready to go inbox">
-          <div class="feature-art mb-6 mx-auto" aria-hidden="true">
-            <svg class="feature-icon" width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="6" y="6" width="108" height="108" rx="18" fill="#fff" stroke="#F3F4F6"/>
-              <g transform="translate(22,24)">
-                <rect x="0" y="8" width="76" height="44" rx="8" fill="#fff" stroke="#E6E7F2"/>
-                <rect x="8" y="18" width="20" height="8" rx="4" fill="#F3F4F6"/>
-                <rect x="32" y="18" width="28" height="8" rx="4" fill="#E6E7F2"/>
-                <path d="M8 34 L18 44 L34 26" stroke="#10B981" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="68" cy="14" r="6" fill="#FF0066" />
-              </g>
-            </svg>
-          </div>
-          <h3 class="text-2xl font-bold text-black mb-3">Ready to go inbox</h3>
-          <p class="text-zinc-600">Your inbox organizes itself, highlights what matters, and drafts the replies you need so you get hours back each week.</p>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
-
-
-  <!-- KEY HEADLINE SECTION (replaces About) -->
-  <section id="headline" class="py-20 px-6 text-center border-y border-black/10">
+  <!-- FEATURES SECTION -->
+  <section id="features" class="py-32 px-6 section-dark">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-6xl md:text-7xl lg:text-[88px] leading-[1.02] font-black text-black mb-6 hero-headline">AI-powered email management, contract analysis, and tax processing for content creators who'd rather be creating.</h2>
+      <div class="text-center mb-16 reveal">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-black mb-6" style="color: #FFF0B3; text-transform: lowercase;">no setup. just sign in</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="dark-glass-card card reveal" style="transition-delay: 0.1s">
+          <div class="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-brand-orange/10">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#FFF0B3" stroke-width="2">
+              <rect x="3" y="6" width="26" height="18" rx="2"/>
+              <path d="M3 10 L16 18 L29 10"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-3" style="color: #FFF0B3; text-transform: lowercase;">Connect to your inbox</h3>
+          <p style="color: rgba(255,240,179,0.75); font-weight: 300;">Connect your email in seconds. Gmail or Outlook works instantly, with no setup required.</p>
+        </div>
+
+        <div class="dark-glass-card card reveal" style="transition-delay: 0.2s">
+          <div class="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-brand-orange/10">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#FFF0B3" stroke-width="2">
+              <circle cx="16" cy="10" r="7"/>
+              <path d="M5 28c0-6 5-10 11-10s11 4 11 10"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-3" style="color: #FFF0B3; text-transform: lowercase;">We learn your voice</h3>
+          <p style="color: rgba(255,240,179,0.75); font-weight: 300;">Our technology adapts to your tone and writing style, ensuring context-aware responses that never feel generic.</p>
+        </div>
+
+        <div class="dark-glass-card card reveal" style="transition-delay: 0.3s">
+          <div class="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-brand-orange/10">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#FFF0B3" stroke-width="2">
+              <path d="M9 11l3 3 8-8"/>
+              <rect x="4" y="4" width="24" height="24" rx="2"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-3" style="color: #FFF0B3; text-transform: lowercase;">Ready to go inbox</h3>
+          <p style="color: rgba(255,240,179,0.75); font-weight: 300;">Your inbox organizes itself, highlights what matters, and drafts the replies you need so you get hours back each week.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY HEADLINE SECTION -->
+  <section id="headline" class="py-32 px-6 text-center section-orange">
+    <div class="max-w-5xl mx-auto reveal">
+      <h2 class="text-4xl md:text-5xl lg:text-6xl leading-[1.05] font-black" style="color: #FFF0B3; text-transform: lowercase;">AI-powered email management, contract analysis, and tax processing for content creators who'd rather be creating.</h2>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="py-32 text-center bg-gradient-to-b from-brand/5 to-brand-orange/5">
-    <h2 class="text-4xl md:text-5xl font-black text-black mb-6">Ready to streamline your operations?</h2>
-    <p class="text-zinc-600 text-lg mb-10 font-light">Book a free consultation and let's build your personalised operations system.</p>
-    <a href="#contact" class="btn-primary px-8 py-4 rounded-full font-bold text-lg">Get Started</a>
+  <section class="py-32 text-center section-cream">
+    <div class="reveal">
+      <h2 class="text-4xl md:text-5xl font-black mb-6" style="color: #1a1a1a; text-transform: lowercase;">Ready to streamline your operations?</h2>
+      <p class="text-lg mb-10 font-light opacity-80">Book a free consultation and let's build your personalised operations system.</p>
+      <a href="#contact" class="btn-tertiary px-8 py-4 text-base">Get Started</a>
+    </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="py-28 px-6">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-4xl md:text-5xl font-black text-black mb-6">Let's Talk</h2>
-      <p class="text-zinc-700 text-lg mb-12 font-light">Tell us about your business, and we'll create your personalised operations roadmap.</p>
+  <section id="contact" class="py-32 px-6 section-dark">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12 reveal">
+        <h2 class="text-4xl md:text-5xl font-black mb-6" style="color: #FFF0B3; text-transform: lowercase;">let's talk</h2>
+        <p class="text-lg font-light" style="color: rgba(255,240,179,0.75);">Tell us about your business, and we'll create your personalised operations roadmap.</p>
+      </div>
 
-      <form class="glass p-10 rounded-3xl space-y-6 reveal-on-scroll" action="https://formspree.io/f/xjkzbjkw" method="POST">
-        <input type="text" name="name" placeholder="Your Name" class="w-full bg-transparent border border-black/10 rounded-xl px-5 py-4 text-black placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
-        <input type="email" name="email" placeholder="Your Email" class="w-full bg-transparent border border-black/10 rounded-xl px-5 py-4 text-black placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
-        <textarea name="message" rows="6" placeholder="What operational challenges are you currently facing?" class="w-full bg-transparent border border-black/10 rounded-xl px-5 py-4 text-black placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all resize-none" required></textarea>
-        <button type="submit" class="btn-primary w-full py-4 rounded-full font-bold text-lg">Send Message</button>
+      <form class="dark-glass-card reveal space-y-6" action="https://formspree.io/f/xjkzbjkw" method="POST">
+        <input type="text" name="name" placeholder="Your Name" class="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-4 placeholder:text-brand-cream/40 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all" style="color: #FFF0B3;" required>
+        <input type="email" name="email" placeholder="Your Email" class="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-4 placeholder:text-brand-cream/40 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all" style="color: #FFF0B3;" required>
+        <textarea name="message" rows="6" placeholder="What operational challenges are you currently facing?" class="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-4 placeholder:text-brand-cream/40 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all resize-none" style="color: #FFF0B3;" required></textarea>
+        <button type="submit" class="btn-primary w-full py-4 text-base">Send Message</button>
       </form>
     </div>
   </section>
+
   </main>
-  <footer class="text-center py-10 border-t border-black/10 text-zinc-700 text-sm">
-    <p>© <span id="year"></span> CreatorOps. The AI That Runs Your Business While You Create.</p>
+
+  <footer class="text-center py-10 border-t border-white/10 section-dark">
+    <p style="color: rgba(255,240,179,0.5); font-size: 0.875rem;">© <span id="year"></span> CreatorOps. The AI That Runs Your Business While You Create.</p>
   </footer>
 
   <script>
-    // Reveal-on-scroll: uses IntersectionObserver to add is-revealed class
+    // Reveal-on-scroll
     (function(){
       const io = new IntersectionObserver((entries, obs) => {
         entries.forEach(e => {
@@ -496,8 +510,7 @@
         });
       }, { threshold: 0.12 });
 
-      document.querySelectorAll('.reveal-on-scroll').forEach(el => {
-        el.classList.add('reveal');
+      document.querySelectorAll('.reveal').forEach(el => {
         io.observe(el);
       });
     })();
