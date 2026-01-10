@@ -34,12 +34,54 @@
       backdrop-filter: blur(6px);
       border: 1px solid rgba(0,0,0,0.06);
       color: #000;
-      transition: all 0.3s ease;
+      transition: background 0.28s ease, border-color 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
+      will-change: transform, box-shadow;
     }
     .glass:hover {
       background: rgba(255,255,255,0.9);
       border-color: rgba(255,0,102,0.18);
       transform: translateY(-2px);
+    }
+
+    /* Interactive card behaviour */
+    .card {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.28s cubic-bezier(.2,.9,.2,1), box-shadow 0.28s cubic-bezier(.2,.9,.2,1);
+      transform: translateZ(0);
+      will-change: transform, box-shadow;
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-10px) scale(1.04) rotateX(2deg);
+      box-shadow: 0 22px 48px rgba(0,0,0,0.10);
+      z-index: 10;
+    }
+    .card:active { transform: translateY(-4px) scale(1.01) rotateX(1deg); }
+    .card:focus-visible { outline: 3px solid rgba(255,0,102,0.12); outline-offset: 8px; border-color: rgba(255,0,102,0.18); }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      pointer-events: none;
+      background: linear-gradient(120deg, rgba(255,255,255,0.00) 30%, rgba(255,255,255,0.08) 55%, rgba(255,255,255,0.00) 100%);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+    .card:hover::after,
+    .card:focus-visible::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card { transition: none; transform: none; box-shadow: none; }
+      .card::after { transition: none; opacity: 0; }
     }
     nav a {
       position: relative;
@@ -170,7 +212,7 @@
       <p class="text-black text-lg max-w-2xl mx-auto mb-16 font-light">Whether you're an independent creator or running a creator agency, we handle the technical, legal, and financial operations so you can focus on what matters — creating content and growing your talent.</p>
       <div class="grid md:grid-cols-3 gap-6">
 
-        <div class="glass p-10 rounded-3xl text-left reveal-on-scroll">
+        <a href="#contact" class="glass p-10 rounded-3xl text-left reveal-on-scroll card" aria-label="AI Agent Engineering card">
           <h3 class="text-2xl font-bold text-black mb-4">AI Agent Engineering</h3>
           <p class="text-black mb-6 leading-relaxed">Custom AI agents built specifically for your brand — intelligently managing your email inbox with your unique voice and tone.</p>
           <ul class="text-black space-y-3">
@@ -179,9 +221,9 @@
             <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Filters and prioritises brand deal inquiries</li>
             <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> 24/7 intelligent inbox management</li>
           </ul>
-        </div>
+        </a>
 
-        <div class="glass p-10 rounded-3xl text-left reveal-on-scroll">
+        <a href="#contact" class="glass p-10 rounded-3xl text-left reveal-on-scroll card" aria-label="Contract Oversight & Management card">
           <h3 class="text-2xl font-bold text-black mb-4">Contract Oversight & Management</h3>
           <p class="text-black mb-6 leading-relaxed">We review, organise, and track all your brand deals, sponsorships, and partnerships — ensuring you never miss a deadline or payment.</p>
           <ul class="text-black space-y-3">
@@ -190,9 +232,9 @@
             <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Centralised dashboard for all active deals</li>
             <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Payment milestone monitoring</li>
           </ul>
-        </div>
+        </a>
 
-        <div class="glass p-10 rounded-3xl text-left reveal-on-scroll">
+        <a href="#contact" class="glass p-10 rounded-3xl text-left reveal-on-scroll card" aria-label="Financial Management & Tax Prep card">
           <h3 class="text-2xl font-bold text-black mb-4">Financial Management & Tax Prep</h3>
           <p class="text-black mb-6 leading-relaxed">Professional invoicing, expense tracking, and tax return preparation — keeping your creator finances organised and audit-ready.</p>
           <ul class="text-black space-y-3">
@@ -201,7 +243,7 @@
             <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Tax return preparation and documentation</li>
             <li class="flex items-start"><span class="text-black mr-3 font-bold">→</span> Revenue analytics and financial reporting</li>
           </ul>
-        </div>
+        </a>
 
       </div>
     </div>
@@ -213,18 +255,18 @@
       <h2 class="text-4xl md:text-5xl font-black text-black mb-6">Why CreatorOps?</h2>
       <p class="text-zinc-700 text-lg max-w-3xl mx-auto mb-12 font-light leading-relaxed">Whether you're an independent creator juggling content and business operations, or an agency managing multiple talent rosters — the administrative burden can be overwhelming. CreatorOps changes that. We provide the infrastructure and expertise to streamline your operations, letting you focus on creativity and growth.</p>
       <div class="mt-16 grid md:grid-cols-3 gap-6">
-        <div class="glass p-10 rounded-3xl reveal-on-scroll">
+        <a href="#contact" class="glass p-10 rounded-3xl reveal-on-scroll card" aria-label="Your Operations Partner card">
           <h3 class="font-bold text-black mb-3 text-xl">Your Operations Partner</h3>
           <p class="text-black leading-relaxed">We handle the business operations so you can focus on what you do best — creating content, building brands, and growing talent.</p>
-        </div>
-        <div class="glass p-10 rounded-3xl reveal-on-scroll">
+        </a>
+        <a href="#contact" class="glass p-10 rounded-3xl reveal-on-scroll card" aria-label="AI-Powered Efficiency card">
           <h3 class="font-bold text-black mb-3 text-xl">AI-Powered Efficiency</h3>
           <p class="text-black leading-relaxed">Cutting-edge AI technology combined with hands-on business expertise — the best of both worlds.</p>
-        </div>
-        <div class="glass p-10 rounded-3xl reveal-on-scroll">
+        </a>
+        <a href="#contact" class="glass p-10 rounded-3xl reveal-on-scroll card" aria-label="Scales With You card">
           <h3 class="font-bold text-black mb-3 text-xl">Scales With You</h3>
           <p class="text-black leading-relaxed">Whether you're just starting out or managing multiple revenue streams, our systems grow with your business.</p>
-        </div>
+        </a>
       </div>
     </div>
   </section>
